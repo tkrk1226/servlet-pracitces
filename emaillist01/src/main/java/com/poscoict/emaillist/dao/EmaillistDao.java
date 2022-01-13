@@ -20,12 +20,7 @@ public class EmaillistDao {
 		ResultSet rs = null;
 		
 		try {
-			//1. JDBC 드라이버 로딩
-			Class.forName("com.mysql.cj.jdbc.Driver"); // Web에서 쓸 때는 필요하다. (JDBC만 할 때는 괜찮음)
-			
-			//2. 연결하기
-			String url = "jdbc:mysql://localhost:3306/webdb?characterEncoding=UTF-8&serverTimezone=UTC";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");						
+			conn = getConnection();
 
 			//3. SQL 준비
 			String sql = "select no, first_name, last_name, email from emaillist order by no desc";
@@ -53,8 +48,6 @@ public class EmaillistDao {
 				result.add(vo);
 			}
 			
-		} catch (ClassNotFoundException e) {
-			System.out.print("드라이버 로딩 실패 : " + e); // e.getMessage()
 		} catch (SQLException e) {
 			System.out.print("error : " + e); // e.getMessage()
 		}
@@ -86,13 +79,8 @@ public class EmaillistDao {
 		ResultSet rs = null;
 		
 		try {
-			//1. JDBC 드라이버 로딩
-			Class.forName("com.mysql.cj.jdbc.Driver"); // Web에서 쓸 때는 필요하다. (JDBC만 할 때는 괜찮음)
+			conn = getConnection();
 			
-			//2. 연결하기
-			String url = "jdbc:mysql://localhost:3306/webdb?characterEncoding=UTF-8&serverTimezone=UTC";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");						
-
 			//3. SQL 준비
 			String sql = "insert into emaillist values( null, ? , ? , ? )";
 			pstmt = conn.prepareStatement(sql);
@@ -107,8 +95,6 @@ public class EmaillistDao {
 			
 			//boiler plate code => 상투적인 코드 => 비효율 
 						
-		} catch (ClassNotFoundException e) {
-			System.out.print("드라이버 로딩 실패 : " + e); // e.getMessage()
 		} catch (SQLException e) {
 			System.out.print("error : " + e); // e.getMessage()
 		}
@@ -131,5 +117,22 @@ public class EmaillistDao {
 		}
 		
 		return result;
+	}
+	
+	private Connection getConnection() throws SQLException{
+		Connection conn = null;
+		
+		try {
+			//1. JDBC 드라이버 로딩
+			Class.forName("com.mysql.cj.jdbc.Driver"); // Web에서 쓸 때는 필요하다. (JDBC만 할 때는 괜찮음)
+			
+			//2. 연결하기
+			String url = "jdbc:mysql://localhost:3306/webdb?characterEncoding=UTF-8&serverTimezone=UTC";
+			conn = DriverManager.getConnection(url, "webdb", "webdb");		
+		} catch(ClassNotFoundException e) {
+			System.out.print("드라이버 로딩 실패 : " + e); // e.getMessage()
+		} 
+		
+		return conn;
 	}
 }
