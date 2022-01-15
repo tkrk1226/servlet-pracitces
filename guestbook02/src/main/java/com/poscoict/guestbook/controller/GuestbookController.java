@@ -17,8 +17,6 @@ public class GuestbookController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String actionName = request.getParameter("action");
 		
-		System.out.println(actionName);
-		
 		ActionFactory af = new GuestbookActionFactory();
 		Action action = af.getAction(actionName);
 		action.execute(request,response);
