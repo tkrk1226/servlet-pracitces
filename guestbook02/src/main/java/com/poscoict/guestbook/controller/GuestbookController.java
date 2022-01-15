@@ -6,16 +6,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.poscoict.guestbook.mvc.GuestbookActionFactory;
+import com.poscoict.web.mvc.Action;
+import com.poscoict.web.mvc.ActionFactory;
+
 public class GuestbookController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		request.setCharacterEncoding("utf-8");
+		String actionName = request.getParameter("action");
 		
-		String actionName = request.getParameter("a");
+		System.out.println(actionName);
 		
-		response.getWriter().println("<h1>guest!!!!!!!!!!!</h1>");
+		ActionFactory af = new GuestbookActionFactory();
+		Action action = af.getAction(actionName);
+		action.execute(request,response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
