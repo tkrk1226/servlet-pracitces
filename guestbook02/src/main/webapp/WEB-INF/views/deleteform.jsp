@@ -7,7 +7,7 @@
 </head>
 <body>
 	<form method="post" action="<%= request.getContextPath()%>/gb">
-		<input type="text" name="action" value="delete">
+		<input type="text" name="a" value="delete">
 		<input type="text" name="no" value="<%= request.getAttribute("no") %>" >
 		<table>
 			<tr>
