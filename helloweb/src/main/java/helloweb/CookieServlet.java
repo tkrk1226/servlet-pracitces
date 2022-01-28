@@ -22,6 +22,7 @@ public class CookieServlet extends HttpServlet {
 			for(Cookie cookie : cookies) {
 				if(COOKIE_NAME.equals(cookie.getName())) {
 					visitCount = Integer.parseInt(cookie.getValue());
+					System.out.println("visitCount : " + visitCount);
 					break; // 다른 쿠키는 관심이 없기 때문
 				}
 			}
